@@ -308,14 +308,14 @@ void do_chess()
     }
 }
 
-void do_pictures(byte *ptr, int size)
+void do_pictures(unsigned char *ptr, int size)
 {
     drop();
     int i, j;
     for (i=308; i>0; i--) {
 
         for (j=57; j>0; j--) {
-            setpixel_c(pgm_read_byte(&(ptr[(i*57)+j]),j);
+            setpixel_c(pgm_read_byte(&(ptr[(i*57)+j])),j);
         }
         showstrip();
         if (i%20 == 0)
