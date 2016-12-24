@@ -372,7 +372,7 @@ void colorWipe(int r, int g, int b, int wait) {
 
 void scenario1()
 {
-    INC_DELAY = 999;
+    INC_DELAY = 255;
     cmode = eeprom_read_byte(&e_mode);
     colorWipe(255,255,255,1);
     if (cmode!=eeprom_read_byte(&e_mode)) return;
@@ -406,7 +406,7 @@ void scenario1()
 
 void scenario2()
 {
-    INC_DELAY = 999;
+    INC_DELAY = 255;
     for (int i = 0; i < 3334; i++)
         do_chess();
     int cmode = eeprom_read_byte(&e_mode);
@@ -478,10 +478,10 @@ int main() {
 			case 4:
 				do_pictures(cards, 308);   //308 pixels!
 				break;
-			case 4:
+			case 5:
 				do_pictures(leaf, 64);   //64 pixels!
 				break;
-            case 5:
+            case 6:
                 eeprom_write_byte(&e_serie,1);
                 break;
             }
