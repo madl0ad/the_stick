@@ -28,6 +28,8 @@
 #include <avr/pgmspace.h>
 #include "doubles.c"
 #include "pictures.c"
+
+
 int * Wheel(int WheelPos) {
     WheelPos = 255 - WheelPos;
     static int color[3] = {0};
@@ -306,14 +308,14 @@ void do_chess()
     }
 }
 
-void do_cards()
+void do_pictures(byte *ptr, int size)
 {
     drop();
     int i, j;
     for (i=308; i>0; i--) {
 
         for (j=57; j>0; j--) {
-            setpixel_c(pgm_read_byte(&(cards[(i*57)+j])),j);
+            setpixel_c(pgm_read_byte(&(ptr[(i*57)+j]),j);
         }
         showstrip();
         if (i%20 == 0)
@@ -328,7 +330,7 @@ void do_batman()
 {
     drop();
     int i, j;
-    for (i=89; i>0; i--) {
+    for (i=262; i>0; i--) {
 
         for (j=57; j>0; j--) {
             setpixel_c(pgm_read_byte(&(batman[(i*57)+j])),j);
@@ -471,10 +473,13 @@ int main() {
                 do_flame();
                 break;
             case 3:
-                do_batman();
+                do_pictures(batman, 262);  //262 pixels!
                 break;
 			case 4:
-				do_cards();
+				do_pictures(cards, 308);   //308 pixels!
+				break;
+			case 4:
+				do_pictures(leaf, 64);   //64 pixels!
 				break;
             case 5:
                 eeprom_write_byte(&e_serie,1);
