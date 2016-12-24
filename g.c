@@ -308,11 +308,29 @@ void do_chess()
     }
 }
 
+void do_face()
+{
+    drop();
+    int i, j;
+    for (i=56; i>0; i--) {
+
+        for (j=56; j>0; j--) {
+            setpixel_c(chess[(i*56)+j],j+1);
+        }
+        showstrip();
+        if (i%20 == 0)
+        {
+            if (check_button()==1) return;
+        }
+        _delay_us(50);
+    }
+}
+
 void do_pictures(unsigned char *ptr, int size)
 {
     drop();
     int i, j;
-    for (i=308; i>0; i--) {
+    for (i=size; i>0; i--) {
 
         for (j=57; j>0; j--) {
             setpixel_c(pgm_read_byte(&(ptr[(i*57)+j])),j);
@@ -324,7 +342,7 @@ void do_pictures(unsigned char *ptr, int size)
         }
         _delay_us(50);
     }
-}
+} 
 
 void colorWipe(int r, int g, int b, int wait) {
     for (int i=0; i<MAX; i++) {
@@ -471,7 +489,7 @@ int main() {
             case 6:
             case 7:
             case 8:
-                scenario1();
+                do_pictures(flame,60);
             }
             INC_DELAY = 2;
             _delay_ms(25);
@@ -491,8 +509,9 @@ int main() {
             case 5:
             case 6:
             case 7:
-                scenario2();
-                break;
+                //scenario2();
+                do_pictures(face,88);
+				break;
             }
             INC_DELAY = 2;
             _delay_ms(25);
