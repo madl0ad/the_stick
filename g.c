@@ -326,41 +326,6 @@ void do_pictures(unsigned char *ptr, int size)
     }
 }
 
-void do_batman()
-{
-    drop();
-    int i, j;
-    for (i=262; i>0; i--) {
-
-        for (j=57; j>0; j--) {
-            setpixel_c(pgm_read_byte(&(batman[(i*57)+j])),j);
-        }
-        showstrip();
-        if (i%20 == 0)
-        {
-            if (check_button()==1) return;
-        }
-        _delay_us(50);
-    }
-}
-
-void do_flame()
-{
-    int i, j;
-    for (i=60; i>0; i--) {
-
-        for (j=57; j>0; j--) {
-            setpixel_c(flame[(i*56)+j],j+1);
-        }
-        showstrip();
-        if (i%20 == 0)
-        {
-            if (check_button()==1) return;
-        }
-        _delay_us(50);
-    }
-}
-
 void colorWipe(int r, int g, int b, int wait) {
     for (int i=0; i<MAX; i++) {
         setpixel(r,g,b,i);
@@ -411,7 +376,7 @@ void scenario2()
         do_chess();
     int cmode = eeprom_read_byte(&e_mode);
     while (cmode == eeprom_read_byte(&e_mode))
-        do_flame();
+        do_pictures(flame, 60);
 }
 
 
@@ -469,19 +434,22 @@ int main() {
             case 1:
                 do_chess();
                 break;
-            case 2:
-                do_flame();
+            case 2: 
+                do_pictures(flame,60);  //60 pixels!
                 break;
             case 3:
                 do_pictures(batman, 262);  //262 pixels!
                 break;
 			case 4:
-				do_pictures(cards, 308);   //308 pixels!
+				do_pictures(face, 88);   //88 pixels!
 				break;
 			case 5:
 				do_pictures(leaf, 64);   //64 pixels!
 				break;
-            case 6:
+			case 6:
+				do_pictures(volks, 91);   //91 pixels!
+				break;
+			case 7:
                 eeprom_write_byte(&e_serie,1);
                 break;
             }
