@@ -994,7 +994,10 @@ int main() {
             case 3:
                 do_batman();
                 break;
-            case 4:
+			case 4:
+				do_cards();
+				break;
+            case 5:
                 eeprom_write_byte(&e_serie,1);
                 break;
             }
