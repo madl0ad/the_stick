@@ -53,42 +53,41 @@ int * Wheel(int WheelPos) {
     return color;
 }
 
-unsigned char ololo[16]={0,1,2,3,4,5,6,7,6,5,4,3,2,1,0};
-
-
-
 void pila(unsigned char c) {
     unsigned char i,j;
     if (c<4) {
         for (j=0; j<57; j+=2) {
             for ( i=0; i<=MAX; i++) {
                 if (i<j) {
-                    (*colors [c ])();
+                    setpixel_c(c,i);
                 } else {
-                    (*colors [11-c ])();
+                    setpixel_c(11-c,i);
                 }
             }
+			showstrip();
             _delay_us(50);
         }
         for (j=56; j>0; j-=2) {
             for ( i=0; i<=MAX; i++) {
                 if (i<j) {
-                    (*colors [c ])();
+                    setpixel_c(c,i);
                 } else {
-                    (*colors [11-c ])();
+                    setpixel_c(11-c,i);
                 }
             }
+			showstrip();
             _delay_us(50);
         }
     } else {
         for (j=0; j<57; j++) {
             for ( i=0; i<=MAX; i++) {
                 if (i<j) {
-                    (*colors [c ])();
+                    setpixel_c(c,i);
                 } else {
-                    (*colors [0 ])();
+                    setpixel_c(0,i);
                 }
             }
+			showstrip();
             _delay_us(50);
         }
     }
@@ -147,33 +146,14 @@ unsigned char t_nof[1152] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0
 };
 
-void lines ()
-{
-    int i, j;
-    for (i=209; i>0; i--) {
-
-        for (j=MAX; j>0; j--) {
-            //	(*colors [ pgm_read_byte(&arr[(i*MAX)+j]) ])();
-        }
-        if (i%95 == 0)
-        {
-            if (check_button()==1) return;
-        }
-        _delay_us(50);
-    }
-}
-
-
 void nof() {
     unsigned int i, j = 0;
+	drop();
     for (i=0; i<48; i++) {
-        for (j=0; j<MAX; j++) {
-            if (j<=24) {
-                (*colors [ t_nof[i*24+j] ])();
-            } else {
-                (*colors [ 0 ])();
-            }
+        for (j=0; j<24; j++) {
+            setpixel_c(t_nof[i*24+j],j);
         }
+		showstrip();
         _delay_us(50);
     }
     if (check_button()==1) return;
@@ -308,24 +288,6 @@ void do_chess()
     }
 }
 
-void do_face()
-{
-    drop();
-    int i, j;
-    for (i=56; i>0; i--) {
-
-        for (j=56; j>0; j--) {
-            setpixel_c(chess[(i*56)+j],j+1);
-        }
-        showstrip();
-        if (i%20 == 0)
-        {
-            if (check_button()==1) return;
-        }
-        _delay_us(50);
-    }
-}
-
 void do_pictures(unsigned char *ptr, int size)
 {
     drop();
@@ -407,8 +369,9 @@ int main() {
         {
         case 1:
             for ( i=0; i<=MAX; i++) {
-                (*colors [eeprom_read_byte(&e_serie)])();
+                setpixel_c(eeprom_read_byte(&e_serie),i);
             }
+			showstrip();
             _delay_ms(25);
             check_button();
             break;
@@ -524,6 +487,3 @@ int main() {
         }
     }
 }
-
-
-
