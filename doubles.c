@@ -1,4 +1,3 @@
-#define S_DELAY		15
 #define P_DELAY		5000
 #define PRESSED			1
 #define NOT_PRESSED		0
@@ -14,7 +13,7 @@ unsigned char mode;
 unsigned char cmode;
 unsigned char EEMEM m;
 unsigned char INC_DELAY = 2;
-
+unsigned char S_DELAY = 15;
 EEMEM unsigned char	e_mode;
 EEMEM unsigned char	e_serie;
 EEMEM unsigned char	e_s_serie;
@@ -187,6 +186,11 @@ void setpixel_c(char i, char j)
 
 unsigned char process_button( unsigned int hold){
 	if ( hold > S_DELAY ){	// next serie
+			if ((mode == SCEN_MODE || mode == SCEN_MODE_2)&&(eeprom_read_byte(&e_serie)!=1)) 
+			{
+				eeprom_write_byte(&e_serie,   1);
+				return 1;
+			}
 			if ( ++mode > MODE_NUM || mode < 1) { 
 				mode=1; 
 			}

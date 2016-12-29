@@ -18,12 +18,15 @@
 #define MODE_NUM 5
 #define S_NUM 8
 #define PICT_MODE 3
+#define SCEN_MODE 4
+#define SCEN_MODE_2 5
 //# define F_CPU 32000000UL
 
 #include <avr/io.h>
 #include <math.h>
 #include <util/delay.h>
 #include <avr/eeprom.h>
+
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 #include "doubles.c"
@@ -452,9 +455,11 @@ int main() {
             case 6:
             case 7:
             case 8:
+				S_DELAY = 30;
                 do_pictures(flame,60);
             }
             INC_DELAY = 2;
+			S_DELAY = 15;
             _delay_ms(25);
             check_button();
             break;
@@ -473,10 +478,12 @@ int main() {
             case 6:
             case 7:
                 //scenario2();
+				S_DELAY = 30;
                 do_pictures(face,88);
 				break;
             }
             INC_DELAY = 2;
+			S_DELAY = 15;
             _delay_ms(25);
             check_button();
             break;
