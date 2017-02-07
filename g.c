@@ -295,13 +295,13 @@ void do_pictures(unsigned char *ptr, int size)
 {
     drop();
     int i, j;
-    for (i=size; i>0; i--) {
+    for (i=0; i<size; i--) {
 
-        for (j=57; j>0; j--) {
+        for (j=0; j<MAX; j--) {
             setpixel_c(pgm_read_byte(&(ptr[(i*57)+j])),j);
         }
         showstrip();
-        if (i%20 == 0)
+        if (i%5 == 0)
         {
             if (check_button()==1) return;
         }
